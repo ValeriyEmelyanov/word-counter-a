@@ -51,8 +51,6 @@ public class MainController {
 
             consoleHelper.printMap(map);
 
-            log.info("Собрана статистика страницы {}", urlStr);
-
         } catch (DownloadException e) {
             consoleHelper.print("Не удалось скачать страницу");
         } catch (ParsingException e) {

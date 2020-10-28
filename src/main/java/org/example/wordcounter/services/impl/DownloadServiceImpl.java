@@ -38,7 +38,5 @@ public class DownloadServiceImpl implements DownloadService {
             throw new DownloadException(e);
         }
 
-        log.info("Страница по url-адресу {} скачана и сохранена в файл {}.", urlStr, filename);
-
     }
 }

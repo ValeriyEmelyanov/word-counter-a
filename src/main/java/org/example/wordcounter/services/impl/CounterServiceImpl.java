@@ -23,7 +23,7 @@ public class CounterServiceImpl implements CounterService {
     public Map<String, Integer> countWords(String text) {
 
         // {' ', ',', '.', '!', '?','"', ';', ':', '[', ']', '(', ')', '\n', '\r', '\t'};
-        final String regex = "\\s+[-–]\\s+|[,.!?\";:\\[\\]()\n\r\t]\\s*|\\s+";
+        final String regex = "\\s+[-–—]\\s+|[,.!?\";:\\[\\]()\n\r\t]\\s*|\\s+";
         String[] words = text.split(regex);
 
         Pattern pattern = Pattern.compile("^[\\d-]+%?$");

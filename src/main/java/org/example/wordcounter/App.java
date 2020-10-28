@@ -12,11 +12,22 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 /**
- * Hello world!
- *
+ * Главный класс приложения,
+ * выполняет обработку параметров,
+ * запускает главный контроллер приложения.
  */
 public class App 
 {
+
+    /**
+     * Служит для запуска приложения.
+     * @param args входные аргументы (необязательные),
+     *             первым аргументом ожидается url-адрес html-страницы для скачивания,
+     *             вторым аргументом ожидается имя файла для сохранения скачанной html-страницы.
+     * @throws InterruptedException
+     * @throws IOException
+     * @throws URISyntaxException
+     */
     public static void main( String[] args ) throws InterruptedException, IOException, URISyntaxException {
         ConsoleHelper consoleHelper = new ConsoleHelperImpl();
 

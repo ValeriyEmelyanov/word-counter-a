@@ -1,9 +1,12 @@
 package org.example.wordcounter.services.impl;
 
+import org.example.wordcounter.exceptions.DownloadException;
 import org.example.wordcounter.services.DownloadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,30 +16,29 @@ import java.nio.file.StandardCopyOption;
  * Реализует интерфейс скачивания файла с помощью HTTP запроса.
  */
 public class DownloadServiceImpl implements DownloadService {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Скачивает файл
-     * @param urlStr адрес файла
+     *
+     * @param urlStr   адрес файла
      * @param filename имя файла для сохранения на диск
-     * @throws IOException
-     * @throws URISyntaxException
-     * @throws InterruptedException
      */
     @Override
-    public void downloadUrl(String urlStr, String filename) throws IOException, URISyntaxException, InterruptedException {
+    public void downloadUrl(String urlStr, String filename) {
 
-        URL url = new URL(urlStr);
-        Files.copy(url.openStream(), Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
+        try {
+            URL url = new URL(urlStr);
+            Files.copy(url.openStream(), Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
+        } catch (MalformedURLException e) {
+            log.error("Неверный url-адрес: {}", urlStr);
+            throw new DownloadException(e);
+        } catch (IOException e) {
+            log.error("Ошибка потока ввода-вывода: {} - {}", urlStr, filename);
+            throw new DownloadException(e);
+        }
 
-        /* Вариант с HttpClient, не работает с адресами вида file:/
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(urlStr))
-                .GET()
-                .build();
+        log.info("Страница по url-адресу {} скачана и сохранена в файл {}.", urlStr, filename);
 
-        HttpResponse<InputStream> inputStreamHttpResponse = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-        Files.copy(inputStreamHttpResponse.body(), Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
-         */
     }
 }

@@ -2,7 +2,6 @@ package org.example.wordcounter.services.impl;
 
 import org.example.wordcounter.services.CounterService;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -15,9 +14,9 @@ public class CounterServiceImpl implements CounterService {
     /**
      * Подсчитывает количество уникальных слов в тексте (строке) без учета регистра.
      * Числа, номера телефонов и проценты исключает из списка слов.
+     *
      * @param text текст (строка), в котором должны быть подсчитаны слова
      * @return карта, содержащая уникальные слова в виде ключей, и их количество вхождений в тексте в качестве значений
-     * @throws IOException
      */
     @Override
     public Map<String, Integer> countWords(String text) {

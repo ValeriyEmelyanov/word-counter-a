@@ -1,12 +1,15 @@
 package org.example.wordcounter.controllers;
 
+import org.example.wordcounter.App;
+import org.example.wordcounter.exceptions.DownloadException;
+import org.example.wordcounter.exceptions.ParsingException;
 import org.example.wordcounter.services.CounterService;
 import org.example.wordcounter.services.DownloadService;
 import org.example.wordcounter.services.ParsingService;
 import org.example.wordcounter.ui.ConsoleHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
@@ -14,18 +17,13 @@ import java.util.Map;
  * Обеспечивает порядок выполнения приложения
  */
 public class MainController {
+    private final Logger log = LoggerFactory.getLogger(App.class);
+
     private final ConsoleHelper consoleHelper;
     private final DownloadService downloadService;
     private final ParsingService parsingService;
     private final CounterService counterService;
 
-    /**
-     * Выполняет основную логику приложения.
-     * @param consoleHelper сервис пользовательского интерфейса
-     * @param downloadService сервис скачивания html-страницы
-     * @param parsingService сервис извлечения контента из html-страницы
-     * @param counterService сервис подсчета уникальных слов в переданном тексте (строке)
-     */
     public MainController(ConsoleHelper consoleHelper,
                           DownloadService downloadService,
                           ParsingService parsingService,
@@ -36,13 +34,31 @@ public class MainController {
         this.counterService = counterService;
     }
 
-    public void run(String urlStr, String filename) throws IOException, URISyntaxException, InterruptedException {
+    /**
+     * Выполняет основную логику приложения.
+     * Выполняет обработку ошибок.
+     *
+     * @param urlStr   url-адрес html-страницы для скачивания
+     * @param filename имя файла, для сохранения скачанной страницы
+     */
+    public void run(String urlStr, String filename) {
 
-        downloadService.downloadUrl(urlStr, filename);
+        try {
 
-        Map<String, Integer> map = counterService.countWords(parsingService.parse(filename));
+            downloadService.downloadUrl(urlStr, filename);
 
-        consoleHelper.printMap(map);
+            Map<String, Integer> map = counterService.countWords(parsingService.parse(filename));
+
+            consoleHelper.printMap(map);
+
+            log.info("Собрана статистика страницы {}", urlStr);
+
+        } catch (DownloadException e) {
+            consoleHelper.print("Не удалось скачать страницу");
+        } catch (ParsingException e) {
+            consoleHelper.print(
+                    "Не удалось извлечь контент страницы, возможно содержимое страницы не соотвествует формату html.");
+        }
 
     }
 

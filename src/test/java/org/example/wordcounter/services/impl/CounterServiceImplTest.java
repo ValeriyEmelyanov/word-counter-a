@@ -3,11 +3,10 @@ package org.example.wordcounter.services.impl;
 import org.example.wordcounter.services.CounterService;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Тест сервиса CounterServiceImpl.
@@ -16,10 +15,9 @@ class CounterServiceImplTest {
 
     /**
      * Проверяет работу метода по подсчету уникальных слов countWords().
-     * @throws IOException
      */
     @Test
-    void countWords() throws IOException {
+    void countWords() {
         String text = "Каждый охотник 1 желает знать. - Знать, где сидит фазан; фазан? фазан!!! 777-22-22";
 
         CounterService service = new CounterServiceImpl();

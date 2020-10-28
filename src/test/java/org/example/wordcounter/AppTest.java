@@ -1,16 +1,16 @@
 package org.example.wordcounter;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Unit test for simple App.
+ * Unit test for App.
  */
 public class AppTest 
 {
     /**
-     * Rigorous Test :-)
+     * Test
      */
     @Test
     public void shouldAnswerWithTrue()

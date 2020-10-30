@@ -35,3 +35,5 @@ classes/
 *.class
 /work/
 *.log
+statistics.mv.db
+statistics.trace.db

@@ -18,6 +18,7 @@ public class ParsingServiceImpl implements ParsingService {
 
     /**
      * Извлекает контент из html-файла
+     *
      * @param filename имя файла
      * @return контент
      */
@@ -28,9 +29,7 @@ public class ParsingServiceImpl implements ParsingService {
             Document doc = Jsoup.parse(new File(filename), null);
             return doc.text();
         } catch (IOException e) {
-            log.error(
-                    "Не удалось извлечь контент из файла {}, возможно содержимое файла не соотвествует формату html.",
-                    filename);
+            log.error(e.getMessage());
             throw new ParsingException(e);
         }
 

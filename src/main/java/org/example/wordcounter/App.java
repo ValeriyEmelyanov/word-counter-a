@@ -1,9 +1,12 @@
 package org.example.wordcounter;
 
 import org.example.wordcounter.controllers.MainController;
+import org.example.wordcounter.repositories.ReviewRepository;
+import org.example.wordcounter.repositories.impl.ReviewRepositoryImpl;
 import org.example.wordcounter.services.impl.CounterServiceImpl;
 import org.example.wordcounter.services.impl.DownloadServiceImpl;
 import org.example.wordcounter.services.impl.ParsingServiceImpl;
+import org.example.wordcounter.services.impl.ReviewRepositoryServiceImpl;
 import org.example.wordcounter.ui.ConsoleHelper;
 import org.example.wordcounter.ui.impl.ConsoleHelperImpl;
 import org.slf4j.Logger;
@@ -47,20 +50,24 @@ public class App {
             try {
                 filename = File.createTempFile("downloaded", null).getPath();
             } catch (IOException e) {
-                String msg = "Не удалось создать временный файл для сохранения страницы";
-                consoleHelper.print(msg);
-                log.error(msg);
+                consoleHelper.print("Не удалось создать временный файл для сохранения страницы");
+                log.error(e.getMessage());
                 return;
             }
         }
+
+        ReviewRepository reviewRepository = new ReviewRepositoryImpl();
 
         MainController controller = new MainController(
                 consoleHelper,
                 new DownloadServiceImpl(),
                 new ParsingServiceImpl(),
-                new CounterServiceImpl()
-        );
+                new CounterServiceImpl(),
+                new ReviewRepositoryServiceImpl(reviewRepository));
 
         controller.run(urlStr, filename);
+
+        reviewRepository.closeResource();
+
     }
 }

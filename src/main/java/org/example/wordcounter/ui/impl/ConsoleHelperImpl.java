@@ -17,6 +17,7 @@ public class ConsoleHelperImpl implements ConsoleHelper {
 
     /**
      * Выводит сообщения в консоль.
+     *
      * @param msg сообщение
      */
     @Override
@@ -26,6 +27,7 @@ public class ConsoleHelperImpl implements ConsoleHelper {
 
     /**
      * Запрашивает и читает url-адресс консоли.
+     *
      * @return url-адрес
      */
     @Override
@@ -36,6 +38,7 @@ public class ConsoleHelperImpl implements ConsoleHelper {
 
     /**
      * Выводит карту в виде каждое "ключ - значение" в отдельной строке в консоль.
+     *
      * @param map карта
      */
     @Override

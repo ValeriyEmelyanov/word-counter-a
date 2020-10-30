@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,11 +29,8 @@ public class DownloadServiceImpl implements DownloadService {
         try {
             URL url = new URL(urlStr);
             Files.copy(url.openStream(), Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
-        } catch (MalformedURLException e) {
-            log.error("Неверный url-адрес: {}", urlStr);
-            throw new DownloadException(e);
         } catch (IOException e) {
-            log.error("Ошибка потока ввода-вывода: {} - {}", urlStr, filename);
+            log.error(e.getMessage());
             throw new DownloadException(e);
         }
 

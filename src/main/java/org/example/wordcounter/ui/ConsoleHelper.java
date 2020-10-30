@@ -9,18 +9,21 @@ public interface ConsoleHelper {
 
     /**
      * Выводит сообщения.
+     *
      * @param msg сообщение
      */
     void print(String msg);
 
     /**
-     * Читает url-адрес
+     * Читает url-адрес.
+     *
      * @return url-адрес
      */
     String readUrl();
 
     /**
      * Выводит карту.
+     *
      * @param map карта
      */
     void printMap(Map<String, Integer> map);

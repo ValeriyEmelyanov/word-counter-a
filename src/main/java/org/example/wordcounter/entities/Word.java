@@ -1,0 +1,35 @@
+package org.example.wordcounter.entities;
+
+/**
+ * Слово
+ * (из слов состоит контент html-страницы,
+ * по уникальным словам контента собирается статистика)
+ */
+public class Word {
+    private long id;
+    private String name;
+
+    public Word() {
+    }
+
+    public Word(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}

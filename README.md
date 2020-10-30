@@ -8,6 +8,8 @@
 ### Используемые технологии
 * Java 11
 * Jsoup
+* H2
+* JDBC
 * JUnit 5
 * Maven
 

@@ -90,7 +90,7 @@ public class WordsDao {
             conn.setAutoCommit(false);
             PreparedStatement statement = conn.prepareStatement(SQL_INSERT);
 
-            final int batchSize = 9;
+            final int batchSize = 1000;
             int shift = 0;
             int limit = Math.min(batchSize, strings.size());
 

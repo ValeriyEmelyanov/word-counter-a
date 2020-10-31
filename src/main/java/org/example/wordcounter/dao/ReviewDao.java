@@ -50,6 +50,8 @@ public class ReviewDao {
         Connection conn = DaoUtil.getConnection();
 
         try {
+            conn.setAutoCommit(false);
+
             PreparedStatement statement = conn.prepareStatement(SQL_INSERT_REVIEWS);
             statement.setString(1, review.getUrl());
             String timesSource = Timestamp.valueOf(review.getReviewDate()).toString();
@@ -70,7 +72,6 @@ public class ReviewDao {
                 throw new DaoException("Не удалось сохранить рецензию.");
             }
 
-            conn.setAutoCommit(false);
             PreparedStatement statementItem = conn.prepareStatement(SQL_INSERT_REVIEW_ITEMS);
             for (Map.Entry<Word, Integer> entry : review.getItems().entrySet()) {
                 statementItem.setLong(1, idReviews);
@@ -79,11 +80,16 @@ public class ReviewDao {
                 statementItem.addBatch();
             }
             statementItem.executeBatch();
-
             conn.commit();
+
             conn.setAutoCommit(true);
         } catch (SQLException e) {
             log.error(e.getMessage());
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                log.error(throwables.getMessage());
+            }
             throw new DaoException("Не удалось сохранить результат рецензии.", e);
         }
 
